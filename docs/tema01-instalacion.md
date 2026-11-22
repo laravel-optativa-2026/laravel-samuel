@@ -21,39 +21,33 @@ Instalación del proyecto con Docker y creación del proyecto Laravel.
      - El comando o el código, en un bloque de código (nunca como captura).
      - Una captura solo si aporta algo visual (navegador, resultado, estructura...). -->
 
-### 2.1 [Nombre del paso]
+### 2.1 Creación de vistas
 
-Explicación de lo que hago y para qué sirve.
+Se van a crear tres vistas llamadas: home, about y contact.
 
-```bash
-php artisan make:model Producto -m
-```
+vista *about.blade.php*
+![Descripción de la captura](img/tema01/01-about.png)
 
-Fragmento de código relevante (indica el archivo):
+vista *home.blade.php*
+![Descripción de la captura](img/tema01/02-home.png)
 
-```php
-// proyecto/app/Models/Producto.php
-class Producto extends Model
-{
-    protected $fillable = ['nombre', 'precio'];
-}
-```
-
-![Descripción de la captura](img/temaXX/01-descripcion.png)
-
+vista *contact.blade.php*
+![Descripción de la captura](img/tema01/03-contact.png)
 ### 2.2 [Nombre del paso]
 
-...
-
+```php
+ Route::view('/', 'home')->name('home');
+ Route::view('/about', 'about')->name('about');
+ Route::view('/contact', 'contact')->name('contact');
+```
 ---
 
 ## 3. 📋 Resumen de comandos utilizados
 
 | Comando | Para qué sirve |
 |---------|----------------|
-| `php artisan ...` | ... |
 | `composer ...` | ... |
-| `git ...` | ... |
+| `docker-compose` | ... |
 
 ---
 
@@ -63,29 +57,45 @@ class Producto extends Model
      Copia el error como texto, no como captura.
      Si no has tenido ningún problema, documenta al menos algo que hayas tenido que investigar. -->
 
-### Problema 1: [Descripción corta]
+### Problema 1: Comprobación del funcionamiento de Laravel después de su instalacón
 
-**Qué estaba haciendo:** ...
+**Qué estaba haciendo:** Comprobar el correcto funcionamiento de Laravel una vez crado el proyecto básico.
 
 **Error:**
 
 ```
-Pega aquí el mensaje de error completo
+Problema de permisos.
 ```
 
-**Causa:** por qué ocurría (lo que has entendido, no solo lo que has hecho).
+**Causa:** Posible problema de permiso
 
 **Solución:**
 
+Ejecutamos en una terminal los siguientes comandos
+
 ```bash
-comando o cambio que lo resolvió
+docker exec -it proyecto-php-1 bash
+php artisan key:generate
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
 ```
 
-**Fuente:** [enlace a la documentación, foro, vídeo...](https://)
+Posteriormente será necesario añadir en el fichero .env
 
-### Problema 2: [Descripción corta]
+```bash
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=test
+DB_USERNAME=alumno
+DB_PASSWORD=alumno
 
-...
+SESSION_DRIVER=file
+```
+
+
+
+**Fuente:** ChatGPT.
+
 
 ---
 
@@ -93,7 +103,14 @@ comando o cambio que lo resolvió
 
 <!-- Captura(s) de la aplicación funcionando al terminar el tema. -->
 
-![Resultado final del tema](img/temaXX/99-resultado-final.png)
+vista *about.blade.php*
+![Descripción de la captura](img/tema01/01-about.png)
+
+vista *home.blade.php*
+![Descripción de la captura](img/tema01/02-home.png)
+
+vista *contact.blade.php*
+![Descripción de la captura](img/tema01/03-contact.png)
 
 ---
 
